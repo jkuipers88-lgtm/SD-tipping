@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SD Tipping — World Cup 2026 Scoreboard</title>
+<style>
+  :root{
+    /* Pitch green & white theme */
+    --bg:#0a3d1f;            /* deep grass */
+    --bg-2:#0d5026;          /* lighter grass */
+    --panel:#ffffff;         /* white cards */
+    --panel-2:#eef5ee;       /* light header rows */
+    --border:#cfe2cf;        /* soft green-grey border */
+    --text:#10331c;          /* dark pitch text on white */
+    --muted:#5c7a64;         /* muted green-grey */
+    --line:#ffffff;          /* white pitch lines */
+    --accent:#f6b400;        /* gold accent */
+    --accent-2:#0d8a3e;      /* vivid green */
+    --green:#28a745;         /* live dot */
+    --red:#e23b3b;
+    --gold:linear-gradient(135deg,#ffd24a 0%,#f59e0b 100%);
+    --silver:linear-gradient(135deg,#e2e8e2 0%,#9fb0a3 100%);
+    --bronze:linear-gradient(135deg,#d49a6a 0%,#a06a3a 100%);
+  }
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;padding:0;color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    min-height:100vh;
+    /* grass stripes + faint football texture */
+    background:
+      radial-gradient(circle at 12% 18%, rgba(255,255,255,.05) 0 14px, transparent 15px),
+      radial-gradient(circle at 82% 72%, rgba(255,255,255,.05) 0 14px, transparent 15px),
+      radial-gradient(circle at 46% 88%, rgba(255,255,255,.04) 0 12px, transparent 13px),
+      repeating-linear-gradient(90deg, var(--bg) 0, var(--bg) 80px, var(--bg-2) 80px, var(--bg-2) 160px);
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:24px}
+
+  header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:20px}
+  .title{font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);display:flex;align-items:center;gap:10px}
+  .title .ball{font-size:26px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+  .title .accent{color:var(--accent)}
+  .subtitle{color:rgba(255,255,255,.8);font-size:14px;margin-top:4px}
+  .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  .meta .pill{background:var(--panel);border:1px solid var(--border);padding:8px 12px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+  .meta .pill strong{color:var(--text)}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{box-shadow:0 0 0 6px rgba(40,167,69,0)}}
+
+  /* Countdown banner */
+  .countdown{
+    display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+    background:linear-gradient(135deg,#0d8a3e 0%,#0a6b2f 100%);
+    border:1px solid rgba(255,255,255,.25);border-radius:16px;
+    padding:16px 20px;margin-bottom:22px;color:#fff;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .countdown .cd-label{font-size:14px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+  .countdown .cd-label .ball{font-size:20px}
+  .countdown .cd-clock{display:flex;gap:12px}
+  .countdown .cd-unit{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:8px 12px;min-width:62px;text-align:center}
+  .countdown .cd-num{font-size:26px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+  .countdown .cd-cap{font-size:10px;text-transform:uppercase;letter-spacing:.12em;opacity:.8;margin-top:4px}
+  .countdown.live{background:linear-gradient(135deg,#f6b400 0%,#e08800 100%);color:#2a1b00}
+  .countdown.live .cd-unit{display:none}
+  .countdown .cd-live-text{display:none;font-size:20px;font-weight:800}
+  .countdown.live .cd-live-text{display:inline-flex;align-items:center;gap:10px}
+
+  .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:14px;margin-bottom:24px}
+  .podium .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .podium .card::before{content:"";position:absolute;left:0;right:0;top:0;height:5px}
+  .podium .card.gold::before{background:var(--gold)}
+  .podium .card.silver::before{background:var(--silver)}
+  .podium .card.bronze::before{background:var(--bronze)}
+  .podium .card::after{content:"⚽";position:absolute;right:-10px;bottom:-14px;font-size:64px;opacity:.06}
+  .podium .rank{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  .podium .medal{font-size:36px;margin:6px 0}
+  .podium .name{font-size:18px;font-weight:700}
+  .podium .points{font-size:26px;font-weight:800;margin-top:6px;color:var(--accent-2)}
+  .podium .points small{color:var(--muted);font-weight:500;font-size:13px}
+
+  .table-wrap{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .table-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+  .table-head h2{margin:0;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .table-head .hint{font-size:12px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:980px}
+  th,td{padding:10px 12px;text-align:right;font-size:13px;border-bottom:1px solid rgba(16,51,28,0.06);white-space:nowrap}
+  th:nth-child(1),th:nth-child(2),th:nth-child(3),td:nth-child(1),td:nth-child(2),td:nth-child(3){text-align:left}
+  thead th{background:var(--panel-2);color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.08em;font-weight:700;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+  thead th:hover{color:var(--text)}
+  thead th .sort-ind{opacity:.6;font-size:10px;margin-left:4px}
+  tbody tr:hover{background:#f3f9f3}
+  td.pos{font-weight:700;color:var(--muted);width:50px}
+  td.pos.p1{color:#e0a400}td.pos.p2{color:#8a9b8e}td.pos.p3{color:#b07a44}
+  td.player{font-weight:600;color:var(--text)}
+  td.total{font-weight:800;color:var(--accent-2);font-size:14px}
+  td.cat{color:#2f5238;font-variant-numeric:tabular-nums}
+  td.cat.dim{color:#a9bdae}
+
+  .legend{margin-top:16px;padding:14px 18px;background:var(--panel);border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--muted);line-height:1.6;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .legend strong{color:var(--text)}
+  @media (max-width:720px){.podium{grid-template-columns:1fr}.title{font-size:22px}.wrap{padding:14px}.countdown{flex-direction:column;gap:12px}}
+  footer{margin-top:24px;text-align:center;color:rgba(255,255,255,.85);font-size:12px}
+  footer .ball{opacity:.9}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <div class="title"><span class="ball">⚽</span> SD Tipping <span class="accent">World Cup 2026</span> <span class="ball">⚽</span></div>
+    <div class="subtitle">Live scoreboard — auto-refreshed from the master workbook</div>
+  </div>
+  <div class="meta">
+    <span class="pill"><span class="live-dot"></span><strong>LIVE</strong></span>
+    <span class="pill">Last updated: <strong>25-06-2026 08:29</strong></span>
+    <span class="pill">21 participants</span>
+  </div>
+</header>
+
+<div class="countdown" id="countdown">
+  <div class="cd-label"><span class="ball">⚽</span> Knockout stage (Round of 32) begins</div>
+  <div class="cd-clock">
+    <div class="cd-unit"><div class="cd-num" id="cd-d">0</div><div class="cd-cap">Days</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-h">0</div><div class="cd-cap">Hours</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-m">0</div><div class="cd-cap">Mins</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-s">0</div><div class="cd-cap">Secs</div></div>
+  </div>
+  <div class="cd-live-text"><span class="ball">⚽</span> Knockout stage is LIVE!</div>
+</div>
+
+<div class="podium" id="podium"></div>
+
+<div class="table-wrap">
+  <div class="table-head">
+    <h2><span>⚽</span> Full Standings</h2>
+    <span class="hint">Click any column to sort &nbsp;•&nbsp; max points per category shown in header</span>
+  </div>
+  <div class="scroll">
+    <table id="standings">
+      <thead><tr id="headRow"></tr></thead>
+      <tbody id="bodyRows"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="legend">
+  <strong>⚽ Scoring categories</strong> mirror the official SD Tipping rules from the admin workbook. Max points per category: <strong>GS 144, GP 24, R32-T 64, R32-M 32, R16-T 16, R16-M 40, QF-T 24, QF-M 36, SF-T 16, SF-M 28, 3-4-T 10, F-T 10, 3-4-M 5, F-M 24, Honor 65</strong>.
+</div>
+
+<footer><span class="ball">⚽</span> SD Tipping World Cup 2026 <span class="ball">⚽</span></footer>
+
+</div>
+
+<script>
+const PARTICIPANTS = [{"name":"Lars","total":57,"gs":42,"gp":3,"r32t":12,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Knut","total":56,"gs":39,"gp":5,"r32t":12,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Jens","total":56,"gs":41,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Anja","total":56,"gs":41,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Hanif","total":55,"gs":40,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Anne","total":55,"gs":40,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Olav","total":55,"gs":38,"gp":5,"r32t":12,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Christopher","total":55,"gs":42,"gp":3,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Thea","total":54,"gs":40,"gp":4,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Karsten","total":53,"gs":38,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Bjørn HP","total":53,"gs":41,"gp":2,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Frode","total":52,"gs":37,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Maj-Lene","total":52,"gs":37,"gp":3,"r32t":12,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Atle","total":49,"gs":36,"gp":3,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Jonatan","total":48,"gs":33,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Inger","total":47,"gs":33,"gp":4,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Line","total":45,"gs":34,"gp":3,"r32t":8,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Mari","total":44,"gs":29,"gp":5,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Anders","total":44,"gs":31,"gp":3,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Ole","total":40,"gs":28,"gp":2,"r32t":10,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0},{"name":"Vigdis","total":29,"gs":20,"gp":1,"r32t":8,"r32m":0,"r16t":0,"r16m":0,"qft":0,"qfm":0,"sft":0,"sfm":0,"tpt":0,"ft":0,"tpm":0,"fm":0,"hb":0}];
+
+const COLS = [
+  {key:"pos",label:"#",max:null},
+  {key:"name",label:"Player",max:null},
+  {key:"total",label:"Total",max:259},
+  {key:"gs",label:"GS",max:144},{key:"gp",label:"GPos",max:24},
+  {key:"r32t",label:"R32-T",max:64},{key:"r32m",label:"R32-M",max:32},
+  {key:"r16t",label:"R16-T",max:16},{key:"r16m",label:"R16-M",max:40},
+  {key:"qft",label:"QF-T",max:24},{key:"qfm",label:"QF-M",max:36},
+  {key:"sft",label:"SF-T",max:16},{key:"sfm",label:"SF-M",max:28},
+  {key:"tpt",label:"3-4-T",max:10},{key:"ft",label:"F-T",max:10},
+  {key:"tpm",label:"3-4-M",max:5},{key:"fm",label:"F-M",max:24},
+  {key:"hb",label:"Honor",max:65}
+];
+
+let sortKey = "total", sortDir = -1;
+
+function rank(list){
+  const sorted = [...list].sort((a,b) => b.total - a.total);
+  let lastTotal = null, lastRank = 0;
+  sorted.forEach((p,i) => {
+    if(p.total !== lastTotal){ lastRank = i+1; lastTotal = p.total; }
+    p.pos = lastRank;
+  });
+  return sorted;
+}
+
+function escape(s){
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+
+/* ---- Countdown to Round of 32 (28 Jun 2026, 00:00) ---- */
+const KICKOFF = new Date(2026, 5, 28, 0, 0, 0); // month is 0-indexed: 5 = June
+function tickCountdown(){
+  const el = document.getElementById("countdown");
+  const diff = KICKOFF - new Date();
+  if(diff <= 0){
+    el.classList.add("live");
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById("cd-d").textContent = d;
+  document.getElementById("cd-h").textContent = String(h).padStart(2,"0");
+  document.getElementById("cd-m").textContent = String(m).padStart(2,"0");
+  document.getElementById("cd-s").textContent = String(s).padStart(2,"0");
+}
+
+function render(){
+  const ranked = rank(PARTICIPANTS);
+
+  const podium = document.getElementById("podium");
+  podium.innerHTML = "";
+  const order = [
+    {idx:1, cls:"silver", medal:"🥈", rank:"Runner-up"},
+    {idx:0, cls:"gold",   medal:"🥇", rank:"Leader"},
+    {idx:2, cls:"bronze", medal:"🥉", rank:"Third"}
+  ];
+  order.forEach(p => {
+    const player = ranked[p.idx];
+    if(!player) return;
+    const card = document.createElement("div");
+    card.className = "card " + p.cls;
+    card.innerHTML = `<div class="rank">${p.rank}</div><div class="medal">${p.medal}</div><div class="name">${escape(player.name)}</div><div class="points">${player.total}<small> pts</small></div>`;
+    podium.appendChild(card);
+  });
+
+  const sorted = [...ranked].sort((a,b) => {
+    if(sortKey === "name") return sortDir * a.name.localeCompare(b.name);
+    if(sortKey === "pos")  return sortDir * (a.pos - b.pos);
+    return sortDir * ((a[sortKey]||0) - (b[sortKey]||0));
+  });
+
+  const headRow = document.getElementById("headRow");
+  headRow.innerHTML = "";
+  COLS.forEach(c => {
+    const th = document.createElement("th");
+    const label = c.max ? `${c.label}<br><span style="font-weight:400;color:#a9bdae">/${c.max}</span>` : c.label;
+    th.innerHTML = `${label}<span class="sort-ind">${sortKey===c.key ? (sortDir===-1?"▼":"▲") : ""}</span>`;
+    th.onclick = () => {
+      if(sortKey === c.key) sortDir = -sortDir;
+      else { sortKey = c.key; sortDir = (c.key==="name"||c.key==="pos") ? 1 : -1; }
+      render();
+    };
+    headRow.appendChild(th);
+  });
+
+  const body = document.getElementById("bodyRows");
+  body.innerHTML = "";
+  sorted.forEach(p => {
+    const tr = document.createElement("tr");
+    COLS.forEach(c => {
+      const td = document.createElement("td");
+      if(c.key === "pos"){
+        td.className = "pos" + (p.pos<=3 ? " p"+p.pos : "");
+        td.textContent = p.pos;
+      } else if(c.key === "name"){
+        td.className = "player";
+        td.textContent = p.name;
+      } else if(c.key === "total"){
+        td.className = "total";
+        td.textContent = p.total;
+      } else {
+        const v = p[c.key] || 0;
+        td.className = "cat" + (v === 0 ? " dim" : "");
+        td.textContent = v;
+      }
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+
+render();
+tickCountdown();
+setInterval(tickCountdown, 1000);
+</script>
+</body>
+</html>
