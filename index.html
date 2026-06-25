@@ -116,13 +116,13 @@
   </div>
   <div class="meta">
     <span class="pill"><span class="live-dot"></span><strong>LIVE</strong></span>
-    <span class="pill">Last updated: <strong>25-06-2026 11:11</strong></span>
+    <span class="pill">Last updated: <strong>25-06-2026 12:05</strong></span>
     <span class="pill">21 participants</span>
   </div>
 </header>
 
 <div class="countdown" id="countdown">
-  <div class="cd-label"><span class="ball">⚽</span> Knockout stage (Round of 32) begins</div>
+  <div class="cd-label"><span class="ball">⚽</span> First knockout match (Round of 32) kicks off</div>
   <div class="cd-clock">
     <div class="cd-unit"><div class="cd-num" id="cd-d">0</div><div class="cd-cap">Days</div></div>
     <div class="cd-unit"><div class="cd-num" id="cd-h">0</div><div class="cd-cap">Hours</div></div>
@@ -189,7 +189,7 @@ function escape(s){
 }
 
 /* ---- Countdown to Round of 32 (28 Jun 2026, 00:00) ---- */
-const KICKOFF = new Date(2026, 5, 28, 0, 0, 0); // month is 0-indexed: 5 = June
+const KICKOFF = new Date(Date.UTC(2026, 5, 28, 19, 0, 0)); // 28 Jun 2026, 19:00 UTC = first R32 match kickoff (12pm PT, Los Angeles)
 function tickCountdown(){
   const el = document.getElementById("countdown");
   const diff = KICKOFF - new Date();
