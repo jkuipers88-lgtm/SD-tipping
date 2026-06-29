@@ -28,20 +28,19 @@
     margin:0;padding:0;color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     min-height:100vh;
-    /* grass stripes + faint football texture */
-    background:
-      radial-gradient(circle at 12% 18%, rgba(255,255,255,.05) 0 14px, transparent 15px),
-      radial-gradient(circle at 82% 72%, rgba(255,255,255,.05) 0 14px, transparent 15px),
-      radial-gradient(circle at 46% 88%, rgba(255,255,255,.04) 0 12px, transparent 13px),
-      repeating-linear-gradient(90deg, var(--bg) 0, var(--bg) 80px, var(--bg-2) 80px, var(--bg-2) 160px);
+    /* scattered, rotated Norwegian flags */
+    background-color: var(--bg);
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27220%27%20height%3D%27220%27%20viewBox%3D%270%200%20220%20220%27%3E%3Cdefs%3E%3Cg%20id%3D%27f%27%3E%3Crect%20x%3D%27-11%27%20y%3D%27-8%27%20width%3D%2722%27%20height%3D%2716%27%20rx%3D%271.5%27%20fill%3D%27%23BA0C2F%27%2F%3E%3Crect%20x%3D%27-5%27%20y%3D%27-8%27%20width%3D%274%27%20height%3D%2716%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%27-11%27%20y%3D%27-2%27%20width%3D%2722%27%20height%3D%274%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%27-4%27%20y%3D%27-8%27%20width%3D%272%27%20height%3D%2716%27%20fill%3D%27%2300205B%27%2F%3E%3Crect%20x%3D%27-11%27%20y%3D%27-1%27%20width%3D%2722%27%20height%3D%272%27%20fill%3D%27%2300205B%27%2F%3E%3C%2Fg%3E%3C%2Fdefs%3E%3Cuse%20href%3D%27%23f%27%20transform%3D%27translate%2845%2C40%29%20rotate%28-28%29%20scale%281.3%29%27%2F%3E%3Cuse%20href%3D%27%23f%27%20transform%3D%27translate%28150%2C55%29%20rotate%2818%29%20scale%281.45%29%27%2F%3E%3Cuse%20href%3D%27%23f%27%20transform%3D%27translate%28110%2C120%29%20rotate%28-6%29%20scale%281.5%29%27%2F%3E%3Cuse%20href%3D%27%23f%27%20transform%3D%27translate%2850%2C165%29%20rotate%2832%29%20scale%281.25%29%27%2F%3E%3Cuse%20href%3D%27%23f%27%20transform%3D%27translate%28178%2C170%29%20rotate%28-20%29%20scale%281.35%29%27%2F%3E%3Cuse%20href%3D%27%23f%27%20transform%3D%27translate%28190%2C108%29%20rotate%2810%29%20scale%281.2%29%27%2F%3E%3C%2Fsvg%3E");
+    background-size: 220px 220px;
+    background-repeat: repeat;
   }
   .wrap{max-width:1280px;margin:0 auto;padding:24px}
 
   header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:20px}
-  .title{font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);display:flex;align-items:center;gap:10px}
+  .title{font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8);display:flex;align-items:center;gap:10px}
   .title .ball{font-size:26px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
   .title .accent{color:var(--accent)}
-  .subtitle{color:rgba(255,255,255,.8);font-size:14px;margin-top:4px}
+  .subtitle{color:rgba(255,255,255,.92);font-size:14px;margin-top:4px;text-shadow:0 1px 3px rgba(0,0,0,.75)}
   .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
   .meta .pill{background:var(--panel);border:1px solid var(--border);padding:8px 12px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
   .meta .pill strong{color:var(--text)}
@@ -102,7 +101,7 @@
   .legend{margin-top:16px;padding:14px 18px;background:var(--panel);border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--muted);line-height:1.6;box-shadow:0 2px 8px rgba(0,0,0,.12)}
   .legend strong{color:var(--text)}
   @media (max-width:720px){.podium{grid-template-columns:1fr}.title{font-size:22px}.wrap{padding:14px}.countdown{flex-direction:column;gap:12px}}
-  footer{margin-top:24px;text-align:center;color:rgba(255,255,255,.85);font-size:12px}
+  footer{margin-top:24px;text-align:center;color:rgba(255,255,255,.95);font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,.75)}
   footer .ball{opacity:.9}
   .flag{height:.95em;width:auto;vertical-align:-2px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.15)}
   .title .flag{height:1em}
@@ -121,7 +120,7 @@
   </div>
   <div class="meta">
     <span class="pill"><span class="live-dot"></span><strong>LIVE</strong></span>
-    <span class="pill">Last updated: <strong>29-06-2026 12:32</strong></span>
+    <span class="pill">Last updated: <strong>29-06-2026 13:16</strong></span>
     <span class="pill">21 participants</span>
   </div>
 </header>
