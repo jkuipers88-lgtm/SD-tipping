@@ -104,32 +104,37 @@
   @media (max-width:720px){.podium{grid-template-columns:1fr}.title{font-size:22px}.wrap{padding:14px}.countdown{flex-direction:column;gap:12px}}
   footer{margin-top:24px;text-align:center;color:rgba(255,255,255,.85);font-size:12px}
   footer .ball{opacity:.9}
+  .flag{height:.95em;width:auto;vertical-align:-2px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.15)}
+  .title .flag{height:1em}
+  .cd-label .flag,.cd-live-text .flag{height:1.05em;vertical-align:-3px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="noflag" viewBox="0 0 22 16"><rect width="22" height="16" fill="#BA0C2F"/><rect x="6" width="4" height="16" fill="#fff"/><rect y="6" width="22" height="4" fill="#fff"/><rect x="7" width="2" height="16" fill="#00205B"/><rect y="7" width="22" height="2" fill="#00205B"/></symbol></svg>
+
 <header>
   <div>
-    <div class="title"><span class="ball">⚽</span> SD Tipping <span class="accent">World Cup 2026</span> <span class="ball">⚽</span></div>
+    <div class="title"><span class="ball">⚽</span><svg class="flag"><use href="#noflag"/></svg> SD Tipping <span class="accent">World Cup 2026</span> <svg class="flag"><use href="#noflag"/></svg><span class="ball">⚽</span></div>
     <div class="subtitle">Live scoreboard — auto-refreshed from the master workbook</div>
   </div>
   <div class="meta">
     <span class="pill"><span class="live-dot"></span><strong>LIVE</strong></span>
-    <span class="pill">Last updated: <strong>29-06-2026 11:05</strong></span>
+    <span class="pill">Last updated: <strong>29-06-2026 12:32</strong></span>
     <span class="pill">21 participants</span>
   </div>
 </header>
 
 <div class="countdown" id="countdown">
-  <div class="cd-label"><span class="ball">⚽</span> First knockout match (Round of 32) kicks off</div>
+  <div class="cd-label"><svg class="flag"><use href="#noflag"/></svg> Next Norway match (vs Ivory Coast) kicks off</div>
   <div class="cd-clock">
     <div class="cd-unit"><div class="cd-num" id="cd-d">0</div><div class="cd-cap">Days</div></div>
     <div class="cd-unit"><div class="cd-num" id="cd-h">0</div><div class="cd-cap">Hours</div></div>
     <div class="cd-unit"><div class="cd-num" id="cd-m">0</div><div class="cd-cap">Mins</div></div>
     <div class="cd-unit"><div class="cd-num" id="cd-s">0</div><div class="cd-cap">Secs</div></div>
   </div>
-  <div class="cd-live-text"><span class="ball">⚽</span> Knockout stage is LIVE!</div>
+  <div class="cd-live-text"><svg class="flag"><use href="#noflag"/></svg> Norway are playing now! <svg class="flag"><use href="#noflag"/></svg></div>
 </div>
 
 <div class="podium" id="podium"></div>
@@ -151,7 +156,7 @@
   <strong>⚽ Scoring categories</strong> mirror the official SD Tipping rules from the admin workbook. Max points per category: <strong>GS 144, GP 24, R32-T 64, R32-M 32, R16-T 16, R16-M 40, QF-T 24, QF-M 36, SF-T 16, SF-M 28, 3-4-T 10, F-T 10, 3-4-M 5, F-M 24, Honor 65</strong>.
 </div>
 
-<footer><span class="ball">⚽</span> SD Tipping World Cup 2026 <span class="ball">⚽</span></footer>
+<footer><svg class="flag"><use href="#noflag"/></svg> SD Tipping World Cup 2026 <svg class="flag"><use href="#noflag"/></svg></footer>
 
 </div>
 
@@ -189,7 +194,7 @@ function escape(s){
 }
 
 /* ---- Countdown to Round of 32 (28 Jun 2026, 00:00) ---- */
-const KICKOFF = new Date(Date.UTC(2026, 5, 28, 19, 0, 0)); // 28 Jun 2026, 19:00 UTC = first R32 match kickoff (12pm PT, Los Angeles)
+const KICKOFF = new Date(Date.UTC(2026, 5, 30, 17, 0, 0)); // 30 Jun 2026, 17:00 UTC = Norway vs Ivory Coast kickoff (12pm CDT, Dallas)
 function tickCountdown(){
   const el = document.getElementById("countdown");
   const diff = KICKOFF - new Date();
